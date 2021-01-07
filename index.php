@@ -105,7 +105,7 @@ if($api=='PUT'){
          echo Mensaje('Usuario not found!',true);
         }
         
-        header("HTTP/1.1 200 OK");
+        //header("HTTP/1.1 200 OK");
         exit();
 }
 }//put
