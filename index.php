@@ -136,6 +136,6 @@ if($api=='DELETE'){
     
 }
 
-header("HTTP/1.1 400 Bad Request");
+//header("HTTP/1.1 400 Bad Request");
 
 
