@@ -61,6 +61,7 @@ function metodoPost($framework){
 function metodoPut($framework){
     try{
         $conexion = Conexion::getInstance();
+        print_r((array)$framework);
         $sql="UPDATE frameworks SET nombre=?, lanzamiento=?, desarrollador=? WHERE id=?";
         $sentencia=$conexion->prepare($sql);
         # Este método devuelve true o false.

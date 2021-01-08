@@ -15,12 +15,21 @@ Los que vamos a utilizar en este programa seran
 400 : Bad Request → La solicitud contiene sintaxis errónea y no debería repetirse
 204 : No Content → La petición se ha completado con éxito pero su respuesta no tiene ningún contenido
 */
-include 'Modelo/CRUD_Framework.php';
-//mirar que significa cada una de esas lineas
+include_once 'Modelo/CRUD_Framework.php';
+//include_once 'Modelo/Conexion.php'; 
+
+
+
+//mirar que significa cada una de esas lineas, creo que para el CORS
+
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: X-Requested-With');
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-type: application/json; charset=utf-8");
+header("Access-Control-Allow-Headers: content-type");
+
+
 $api = $_SERVER['REQUEST_METHOD'];
 //echo json_encode($api);
 if($api=='GET'){
@@ -33,14 +42,14 @@ if($api=='GET'){
         }else{
              echo json_encode($resultado);
             //http_response_code(200); es lo mismo que la siguiente linea
-            header("HTTP/1.1 200 OK");
+            //header("HTTP/1.1 200 OK");
             }
     }else{
         
         $resultado=metodoGetAll();
         echo json_encode($resultado); 
         //http_response_code(200);
-        header("HTTP/1.1 200 OK");        
+        //header("HTTP/1.1 200 OK");        
     }
     exit();
 }
@@ -61,40 +70,41 @@ if($api=='POST'){
 }
 
 if($api=='PUT'){
-    
-    if (isset($_GET['id']))
-    {   
-              
+         
         if (isset($_GET['id']))
         {   
-           
-            echo json_encode($_GET['id']);
+             
+            
+            //echo json_encode($_GET['id']);
             
             //cuando trabaje desde REACT
-            $JSONData=file_get_contents('php://input');
+            //$JSONData=file_get_contents('php://input');
+            //recogo un objeto y por tanto lo convierto en un array para trabajar mejkor con
+            $registro = (array)json_decode(file_get_contents("php://input"));
+           
+            
             
             //la función json_decode() 
             //Esta función, según la documentación oficial de PHP, lo que hace es “Convierte un string codificado en JSON a una variable de PHP”. 
             //Básicamente convierte un JSON en un objeto Array.
-            $datos=json_decode($JSONData,true);
-            //print_r($datos);
-          
+            //$datos=json_decode($JSONData,true);
+            
             $framework= new Framework();
             $id=htmlspecialchars($_GET['id']);
             $framework->setId($id);
-            if (isset($datos['nombre']))
-                $framework->setNombre(htmlspecialchars($datos['nombre']));
+            if (isset($registro['nombre']))
+                $framework->setNombre(htmlspecialchars($registro['nombre']));
                 //echo json_encode($datos['nombre']);
-            if (isset($datos['lanzamiento']))
-                $framework->setLanzamiento(htmlspecialchars($datos['lanzamiento']));
+            if (isset($registro['lanzamiento']))
+                $framework->setLanzamiento(htmlspecialchars($registro['lanzamiento']));
                 //echo json_encode($datos['lanzamiento']);
-            if (isset($datos['desarrollador']))
-                $framework->setDesarrollador(htmlspecialchars($datos['desarrollador']));
+            if (isset($registro['desarrollador']))
+                $framework->setDesarrollador(htmlspecialchars($registro['desarrollador']));
                 //echo json_encode($datos['desarrollador']);
            
-            
-            //llama a la función  definida en el crud
-        
+              
+            //llama a la función  definida en el crud en este caso la funcion put
+           
             $resultado=metodoPut($framework);
             if ($resultado) {
                 echo Mensaje('Registro Modificado  successfully!',false);
@@ -107,7 +117,7 @@ if($api=='PUT'){
         
         //header("HTTP/1.1 200 OK");
         exit();
-}
+
 }//put
 
 if($api=='DELETE'){
@@ -122,7 +132,7 @@ if($api=='DELETE'){
         
         if ($resultado>0){
            //message es un metodo para codificar en json el error
-               echo Mensaje("Registro Borrado Satisfactoriamente!",false);
+                echo Mensaje("Registro Borrado Satisfactoriamente!",false);
                //header("HTTP/1.1 200 OK");
         }
             else{
