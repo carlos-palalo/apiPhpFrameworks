@@ -20,14 +20,20 @@ include_once 'Modelo/CRUD_Framework.php';
 
 
 
-//mirar que significa cada una de esas lineas, creo que para el CORS
+// lineas para el CORS
+//CORS son las siglas de "Cross-origin resource sharing" y es básicamente una restricción
+// de acceso a recursos que están localizados en otros dominios
+//por las restricciones de CORS, por motivos relacionados con la seguridad,
+//NO se puede acceder a recursos (APIs) desde Javascript que se encuentren en otros dominios.
 
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+//header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-type: application/json; charset=utf-8");
-header("Access-Control-Allow-Headers: content-type");
+
+//Como puedes apreciar, son varias cabeceras las que tenemos que configurar. 
+//Algunas veces no te harán falta todas, pero no está de más colocarlas así, si es que quieres desactivar las restricciones CORS.
 
 
 $api = $_SERVER['REQUEST_METHOD'];
@@ -73,17 +79,13 @@ if($api=='PUT'){
          
         if (isset($_GET['id']))
         {   
-             
-            
-            //echo json_encode($_GET['id']);
             
             //cuando trabaje desde REACT
             //$JSONData=file_get_contents('php://input');
-            //recogo un objeto y por tanto lo convierto en un array para trabajar mejkor con
+            //recogo un objeto y por tanto lo convierto en un array para trabajar mejor con
             $registro = (array)json_decode(file_get_contents("php://input"));
            
-            
-            
+                        
             //la función json_decode() 
             //Esta función, según la documentación oficial de PHP, lo que hace es “Convierte un string codificado en JSON a una variable de PHP”. 
             //Básicamente convierte un JSON en un objeto Array.
