@@ -29,7 +29,7 @@ include_once 'Modelo/CRUD_Framework.php';
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-//header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-type: application/json; charset=utf-8");
 
 //Como puedes apreciar, son varias cabeceras las que tenemos que configurar. 
