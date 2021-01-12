@@ -32,6 +32,18 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header("Content-type: application/json; charset=utf-8");
 
+//Un ejemplo de solicitud de origen cruzado: el código JavaScript frontend 
+//de una aplicación web que es localizada en http://domain-a.com utiliza XMLHttpRequest
+// para cargar el recurso http://api.domain-b.com/data.json.
+
+//Por razones de seguridad, los exploradores restringen las solicitudes HTTP 
+//de origen cruzado iniciadas dentro de un script. 
+//Por ejemplo, XMLHttpRequest y la API Fetch siguen la política de mismo-origen. 
+//Ésto significa que una aplicación que utilice esas APIs XMLHttpRequest 
+//sólo puede hacer solicitudes HTTP a su propio dominio, 
+//a menos que se utilicen cabeceras CORS.
+
+
 //Como puedes apreciar, son varias cabeceras las que tenemos que configurar. 
 //Algunas veces no te harán falta todas, pero no está de más colocarlas así, si es que quieres desactivar las restricciones CORS.
 
