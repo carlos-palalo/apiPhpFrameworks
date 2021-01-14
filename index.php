@@ -157,6 +157,28 @@ if($api=='DELETE'){
        
         exit();
     }
+
+    if (isset($_GET['nombre']))
+    {
+        
+        $nombre=htmlspecialchars($_GET['nombre']);
+        
+        $resultado=metodoDeleteNombre($nombre);
+        echo json_encode($resultado);
+        
+        if ($resultado>0){
+           //message es un metodo para codificar en json el error
+                echo Mensaje("Registro Borrado Satisfactoriamente!",false);
+               //header("HTTP/1.1 200 OK");
+        }
+            else{
+                echo Mensaje('No se ha encontrado ese id registro para  borrarle',true);
+                //header("HTTP/1.1 204 No se ha encontrado ese id registro para  borrarle");
+            }
+        
+       
+        exit();
+    }
     
 }
 

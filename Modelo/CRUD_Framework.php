@@ -61,7 +61,7 @@ function metodoPost($framework){
 function metodoPut($framework){
     try{
         $conexion = Conexion::getInstance();
-        print_r((array)$framework);
+        //print_r((array)$framework);
         $sql="UPDATE frameworks SET nombre=?, lanzamiento=?, desarrollador=? WHERE id=?";
         $sentencia=$conexion->prepare($sql);
         # Este método devuelve true o false.
@@ -92,6 +92,20 @@ function metodoDelete($id){
     }
 }
 
+function metodoDeleteNombre($nombre){
+    try{
+        $conexion = Conexion::getInstance();
+        $sql="DELETE FROM frameworks WHERE nombre=?";
+        $sentencia=$conexion->prepare($sql);
+        $sentencia->execute(array($nombre));
+        //devuelve el número de filas que fueron eliminadas
+        $filas_eliminadas = $sentencia->rowCount();
+        $conexion=null;
+        return $filas_eliminadas;
+    }catch(PDOException $e){
+        echo Mensaje('Error en el borrado: ' . $e->getMessage(),true);
+    }
+}
  
 
 // JSON Format Converter Function
